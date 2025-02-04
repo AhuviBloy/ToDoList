@@ -47,12 +47,11 @@ app.UseAuthorization();  // הוספת הגישה לאישור
 
 
 
-
+//get
 app.MapGet("/items", async (ToDoDbContext db) =>
 {
     return await db.Items.ToListAsync(); // שליפת כל המשימות
 });
-
 
 //post
 app.MapPost("/items",async (ToDoDbContext db,Item newItem) =>{
@@ -60,18 +59,18 @@ app.MapPost("/items",async (ToDoDbContext db,Item newItem) =>{
     await db.SaveChangesAsync();
     return Results.Created($"/items/{newItem.Id}", newItem);
 });
+
 //Put
 app.MapPut("/items/{id}", async (ToDoDbContext db, int id, bool isComplete) =>{
     var item = await db.Items.FindAsync(id);
     if (item == null) return Results.NotFound($"Item with ID {id} not found.");
-
-    //item.Name = updatedItem.Name;
-    //item.Name=item.Name;
+    
     item.IsComplete = isComplete;
     await db.SaveChangesAsync();
     return Results.Ok(item);
 });
 
+//delete
 app.MapDelete("/items/{id}", async (int id, ToDoDbContext db) =>
 {
     var item = await db.Items.FindAsync(id);
