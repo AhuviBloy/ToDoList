@@ -35,7 +35,7 @@ var app = builder.Build();
 app.UseCors();
 
 // Enable Swagger UI
-if (app.Environment.IsDevelopment())
+// if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();  
@@ -45,7 +45,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication(); // אם אתה משתמש באימות
 app.UseAuthorization();  // הוספת הגישה לאישור
 
-
+//get
+app.MapGet("/",()=>"TodoApiServer is running!!");
 
 //get
 app.MapGet("/items", async (ToDoDbContext db) =>
@@ -64,7 +65,7 @@ app.MapPost("/items",async (ToDoDbContext db,Item newItem) =>{
 app.MapPut("/items/{id}", async (ToDoDbContext db, int id, bool isComplete) =>{
     var item = await db.Items.FindAsync(id);
     if (item == null) return Results.NotFound($"Item with ID {id} not found.");
-    
+
     item.IsComplete = isComplete;
     await db.SaveChangesAsync();
     return Results.Ok(item);
