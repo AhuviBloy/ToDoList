@@ -1,23 +1,19 @@
 import axios from 'axios';
 
-// הגדרת כתובת ה-API כ-default
-axios.defaults.baseURL = "http://localhost:5246";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
-// הוספת interceptor שיתפוס את השגיאות וירשום אותן בלוג
 axios.interceptors.response.use(
   (response) => {
-    // במקרה של הצלחה, מחזירים את התגובה כרגיל
     return response;
   },
   (error) => {
-    // במקרה של שגיאה, רושמים את השגיאה בלוג
     console.error("Axios Error:", error.response ? error.response.data : error.message);
-    return Promise.reject(error); // חשוב להחזיר את השגיאה כדי שהיא תגיע למקום שהזמין את הקריאה
+    return Promise.reject(error); 
   }
 );
 
+
 export default {
-  // פונקציה לקבלת כל המטלות
   getTasks: async () => {
     try {
       const result = await axios.get('/items');
@@ -27,7 +23,6 @@ export default {
       throw error;
     }
   },
-
 
   addTask: async(name)=>{
     const result = await axios.post(`/items`,{

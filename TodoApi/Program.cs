@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TodoApi;
 var builder = WebApplication.CreateBuilder(args);
+
 //cors (adding the cors definition)
 builder.Services.AddCors(options =>
 {
