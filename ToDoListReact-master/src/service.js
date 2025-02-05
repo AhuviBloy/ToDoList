@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 // axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-axios.defaults.baseURL = "https://todolistserver1-v9j0.onrender.com";
+axios.defaults.baseURL = "https://todolistserver1-v9j0.onrender.com"
 
 axios.interceptors.response.use(
   (response) => {
