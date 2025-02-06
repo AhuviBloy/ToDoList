@@ -1,35 +1,36 @@
-
 const express = require('express');
-const app = express();
 const axios = require('axios');
-// require('dotenv').config();
-const renderApi = require('./renderApi'); // ייבוא הקובץ שמכיל את קריאות ה-API
+require('dotenv').config();
 
-// Endpoint שמחזיר את האפליקציות המותקנות ב-Render
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+
 app.get('/', async (req, res) => {
-    try {
-      // const apiKey = process.env.RENDER_API_KEY;
-      const apiKey ='rnd_VWdEdIKvi9tOqJXxHXeXMwK2TSzb';
-      console.log(apiKey);
-  
-      const response = await axios.get('https://api.render.com/v1/services', {
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-        },
-      });
-  
-      res.json(response.data);
-    } catch (error) {
-      console.error('Error fetching data from Render API:', error);
-      res.status(500).json({ message: 'Error fetching data' });
-    }
-  });
+  try {
+    const apiKey = process.env.RENDER_API_KEY;
 
-// הגדרת פורט השרת
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+    const response = await axios.get('https://api.render.com/v1/services', {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching data from Render API:', error);
+    res.status(500).json({ message: 'Error fetching data' });
+  }
 });
+
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+
+
+
 
 
 
