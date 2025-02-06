@@ -3,13 +3,18 @@ const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001; 
 
 
 app.get('/', async (req, res) => {
+  console.log("Received request to /"); // מוסיף לוג לבדיקת קריאות
+
   try {
     const apiKey = process.env.RENDER_API_KEY;
-
+    if (!apiKey) {
+      console.error("Missing RENDER_API_KEY");
+      return res.status(500).json({ message: "Missing API key" });
+    }
     const response = await axios.get('https://api.render.com/v1/services', {
       headers: {
         Authorization: `Bearer ${apiKey}`,
