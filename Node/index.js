@@ -5,9 +5,6 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// טיפול בבקשות ל-favicon.ico כדי למנוע שגיאת 404
-app.get('/favicon.ico', (req, res) => res.status(204).end());
-
 app.get('/', async (req, res) => {
   console.log("Received request to /");
 
